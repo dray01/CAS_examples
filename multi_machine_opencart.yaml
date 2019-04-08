@@ -113,8 +113,8 @@ resources:
           - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - tee /etc/telegraf/telegraf.d/apache.conf > /dev/null << EOF
-          - [[inputs.apache]]
-          -   urls = ["http://0.0.0.0/server-status?auto"
+          - '[[inputs.apache]]'
+          -   urls = ["http://0.0.0.0/server-status?auto"]
           - EOF
           - service telegraf restart
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
