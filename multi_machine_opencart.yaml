@@ -117,7 +117,7 @@ resources:
     properties:
       image: ubuntu
       flavor: Medium
-      folderName: '${input.placement == "VMC" ? "Workloads" : ""}'
+#      folderName: '${input.placement == "VMC" ? "Workloads" : ""}'
       cloudConfig: |
         repo_update: true
         repo_upgrade: all
