@@ -109,7 +109,7 @@ resources:
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
-        - tag: '${"env:" + to_lower(input.placement)}'
+        - tag: '${"platform:" + to_lower(input.placement)}'
       networks:
         - name: '${resource.Cloud_Network_1.name}'
   mysql:
@@ -163,7 +163,7 @@ resources:
           - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
-        - tag: '${"env:" + to_lower(input.placement)}'
+        - tag: '${"platform:" + to_lower(input.placement)}'
       networks:
         - name: '${resource.Cloud_Network_1.name}'
   Cloud_Network_1:
@@ -172,4 +172,4 @@ resources:
       name: oc_network
       networkType: existing
       constraints:
-        - tag: 'net:aws'
+        - tag: '${"platform:" + to_lower(input.placement)}'
