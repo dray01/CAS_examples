@@ -105,7 +105,7 @@ resources:
           - sed -i "s/passwordhere/$PASS/g" /var/www/opencart/admin/config.php
           - systemctl reload apache2
           - systemctl restart apache2
-          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address tp-lid-wpx01.tphome.local    --proxy-port 2878
+          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
@@ -160,7 +160,7 @@ resources:
           - mysql -u root -e 'CREATE DATABASE opencart'
           - mysql -u root -e 'USE opencart'
           - mysql -u root -e 'flush privileges'
-          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address tp-lid-wpx01.tphome.local    --proxy-port 2878
+          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
         - tag: '${"env:" + to_lower(input.placement)}'
