@@ -3,10 +3,12 @@ inputs:
   user:
     type: string
     title: Username for System Admin Account
+    default: brettd
     description: The username you would like to have for the installation.
   pass:
     type: string
     encrypted: true
+    default: VMware1!
     title: Password for ocuser for OpenCart.
     description: The password you would like to have for OpenCart.
   placement:
