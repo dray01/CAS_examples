@@ -25,8 +25,8 @@ resources:
     dependsOn:
       - mysql
     properties:
-      image: ubuntu
-      flavor: Medium
+      image: ubuntu 16.04
+      flavor: small
       folderName: '${input.placement == "VMC" ? "Workloads" : ""}'
       cloudConfig: |
         repo_update: true
@@ -84,6 +84,11 @@ resources:
           - cd /etc/apache2/sites-available/
           - a2ensite opencart.conf
           - a2dissite 000-default.conf
+          - tee /etc/apache2/mods-enabled/status.conf > /dev/null << EOF
+          - <Location "/server-status">
+          -   SetHandler server-status
+          - </Location>
+          - EOF
           - systemctl reload apache2
           - systemctl restart apache2
           - echo "[client]" >> /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -107,6 +112,11 @@ resources:
           - systemctl restart apache2
           - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+          - tee /etc/telegraf/telegraf.d/apache.conf > /dev/null << EOF
+          - [[inputs.apache]]
+          -   urls = ["http://0.0.0.0/server-status?auto"
+          - EOF
+          - service telegraf restart
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
         - tag: '${"platform:" + to_lower(input.placement)}'
@@ -115,8 +125,8 @@ resources:
   mysql:
     type: Cloud.Machine
     properties:
-      image: ubuntu
-      flavor: Medium
+      image: ubuntu 16.04
+      flavor: small
       folderName: '${input.placement == "VMC" ? "Workloads" : ""}'
       cloudConfig: |
         repo_update: true
