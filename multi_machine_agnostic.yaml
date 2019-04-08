@@ -43,9 +43,9 @@ resources:
         #CloudConfig
         hostname: ${input.Hostname1}
         users:
-        - name: ${input.User1}
+         - name: ${input.User1}
         ssh-authorized-keys:
-          - ${input.sshkey}
+         - ${input.sshkey}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
