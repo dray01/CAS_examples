@@ -33,7 +33,6 @@ resources:
         repo_upgrade: all
         apt_source:
           - source: deb http://archive.ubuntu.com/ubuntu main universe multiverse restricted
-
         packages:
           - apache2
           - php
@@ -59,7 +58,6 @@ resources:
             sudo: ['ALL=(ALL) NOPASSWD:ALL']
             groups: sudo
             shell: /bin/bash
-
         runcmd:
           - echo ${resource.frontend.address}
           - systemctl restart apache2
@@ -107,6 +105,8 @@ resources:
           - sed -i "s/passwordhere/$PASS/g" /var/www/opencart/admin/config.php
           - systemctl reload apache2
           - systemctl restart apache2
+          - sudo bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address tp-lid-wpx01.tphome.local    --proxy-port 2878
+          - logger "Wavefront Agent installed"
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
@@ -124,7 +124,6 @@ resources:
         repo_upgrade: all
         apt_source:
           - source: deb http://archive.ubuntu.com/ubuntu main universe multiverse restricted
-
         packages:
           - mysql-server-5.7
           - mysql-client
@@ -162,6 +161,8 @@ resources:
           - mysql -u root -e 'CREATE DATABASE opencart'
           - mysql -u root -e 'USE opencart'
           - mysql -u root -e 'flush privileges'
+          - sudo bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address tp-lid-wpx01.tphome.local    --proxy-port 2878
+          - logger "Wavefront Agent installed"
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
         - tag: '${"env:" + to_lower(input.placement)}'
@@ -174,4 +175,3 @@ resources:
       networkType: existing
       constraints:
         - tag: 'net:aws'
-
