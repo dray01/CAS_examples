@@ -1,0 +1,100 @@
+formatVersion: 1
+inputs:
+  Hostname1:
+    type: string
+  User1:
+    type: string
+    title: User for SSH Access
+    default: demosuer
+  Hostname2:
+    type: string
+  User2:
+    type: string
+    title: User for SSH Access
+    default: demosuer
+  SelectCloud1:
+    type: string
+    enum:
+      - AWS
+      - vSphere
+      - Azure
+  SelectCloud2:
+    type: string
+    enum:
+      - AWS
+      - vSphere
+      - Azure
+  sshkey:
+    type: string
+    encrypted: true
+    title: Enter SSH Key.
+    description: The SSH-Key for connectivity
+resources:
+  Cloud_Machine_1:
+    type: Cloud.Machine
+    metadata:
+      layoutPosition:
+        - 1
+        - 1
+    properties:
+      image: Ubuntu
+      flavor: Medium
+      cloudConfig: |
+        #CloudConfig
+        hostname: ${input.Hostname1}
+        users:
+         - name: ${input.User1}
+        ssh-authorized-keys:
+         - ${input.sshkey}
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        groups: sudo
+        shell: /bin/bash
+      constraints:
+        - tag: '${"env:" + to_lower(input.SelectCloud1)}'
+      networks:
+        - name: '${resource.Cloud_Network_1.name}'
+  Cloud_Machine_2:
+    type: Cloud.Machine
+    metadata:
+      layoutPosition:
+        - 0
+        - 0
+    properties:
+      image: Ubuntu
+      flavor: Medium
+      cloudConfig: |
+        #CloudConfig
+        hostname: ${input.Hostname2}
+        users:
+        - name: ${input.User2}
+        ssh-authorized-keys:
+          - ${input.sshkey}
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        groups: sudo
+        shell: /bin/bash
+      constraints:
+        - tag: '${"env:" + to_lower(input.SelectCloud2)}'
+      networks:
+        - name: '${resource.Cloud_Network_2.name}'
+  Cloud_Network_1:
+    type: Cloud.Network
+    metadata:
+      layoutPosition:
+        - 2
+        - 0
+    properties:
+      name: bobo
+      networkType: existing
+      constraints:
+        - tag: '${"net:" + to_lower(input.SelectCloud1)}'
+  Cloud_Network_2:
+    type: Cloud.Network
+    metadata:
+      layoutPosition:
+        - 3
+        - 0
+    properties:
+      name: yoyo
+      networkType: existing
+      constraints:
+        - tag: '${"net:" + to_lower(input.SelectCloud2)}'
