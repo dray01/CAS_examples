@@ -48,8 +48,8 @@ resources:
         hostname: ${input.Hostname1}
         users:
          - name: ${input.User1}
-        ssh-authorized-keys:
-         - ${input.sshkey}
+#        ssh-authorized-keys:
+#         - ${input.sshkey}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
@@ -71,8 +71,8 @@ resources:
         hostname: ${input.Hostname2}
         users:
         - name: ${input.User2}
-        ssh-authorized-keys:
-          - ${input.sshkey}
+#        ssh-authorized-keys:
+#          - ${input.sshkey}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
