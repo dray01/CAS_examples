@@ -42,7 +42,7 @@ resources:
         - 1
         - 1
     properties:
-      image: Ubuntu
+      image: ubuntu 16.04
       flavor: Medium
       cloudConfig: |
         #CloudConfig
@@ -65,7 +65,7 @@ resources:
         - 0
         - 0
     properties:
-      image: Ubuntu
+      image: ubuntu 16.04
       flavor: Medium
       cloudConfig: |
         #CloudConfig
