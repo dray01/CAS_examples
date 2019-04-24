@@ -2,12 +2,14 @@ formatVersion: 1
 inputs:
   Hostname1:
     type: string
+    default: host01
   User1:
     type: string
     title: User for SSH Access
     default: demosuer
   Hostname2:
     type: string
+    default: host02
   User2:
     type: string
     title: User for SSH Access
@@ -18,17 +20,19 @@ inputs:
       - AWS
       - vSphere
       - Azure
+    default: AWS
   SelectCloud2:
     type: string
     enum:
       - AWS
       - vSphere
       - Azure
-  sshkey:
-    type: string
-    encrypted: true
-    title: Enter SSH Key.
-    description: The SSH-Key for connectivity
+    default: AWS
+#  sshkey:
+#    type: string
+#    encrypted: true
+#    title: Enter SSH Key.
+#    description: The SSH-Key for connectivity
 resources:
   Cloud_Machine_1:
     type: Cloud.Machine
