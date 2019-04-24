@@ -94,7 +94,7 @@ resources:
         - 3
         - 0
     properties:
-      name: yoyo
+      name: bobo
       networkType: existing
       constraints:
         - tag: '${"net:" + to_lower(input.SelectCloud2)}'
