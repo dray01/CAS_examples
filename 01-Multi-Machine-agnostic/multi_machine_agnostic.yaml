@@ -28,11 +28,12 @@ inputs:
       - vSphere
       - Azure
     default: AWS
-#  sshkey:
-#    type: string
-#    encrypted: true
-#    title: Enter SSH Key.
-#    description: The SSH-Key for connectivity
+  sshkey:
+    type: string
+    encrypted: true
+    title: Enter SSH Key.
+    description: The SSH-Key for connectivity
+    default: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxezZxqStrhNGUv49ATk4aypZEN0zqT5Sue4LiXIzjTzsymCKICX1FXnSIM3huaEHo+FUUupFUTExV7zXgoFvWfRDjmP/L2IAGkRElgJZGctEZcfKdxxPGk61/84x66mnVtTM28eMx83RuvEu1PdbL5b1WmgNjqW+MPPqiTuleLcEg3flET7ASCt1Bo6YkKm4AePYOMg3FxfS4dUuFigJNdXyWnY7FS9FIO247DKsKmjsy9g73noQRSRCYdXsYlNXlYNZRvLh2B9KQfdazmZn1KnKYZqokHv2SBc3e7MgZsELUAT/qraXcykf0e8l82skyd7o1mvvuTZdY20fmlb49 brettdrayton@Bretts-MacBook-Pro.local
 resources:
   Cloud_Machine_1:
     type: Cloud.Machine
@@ -48,8 +49,8 @@ resources:
         hostname: ${input.Hostname1}
         users:
          - name: ${input.User1}
-#        ssh-authorized-keys:
-#         - ${input.sshkey}
+        ssh-authorized-keys:
+         - ${input.sshkey}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
@@ -71,8 +72,8 @@ resources:
         hostname: ${input.Hostname2}
         users:
         - name: ${input.User2}
-#        ssh-authorized-keys:
-#          - ${input.sshkey}
+        ssh-authorized-keys:
+          - ${input.sshkey}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
         groups: sudo
         shell: /bin/bash
