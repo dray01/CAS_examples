@@ -10,7 +10,7 @@ inputs:
     description: The username you would like to have for the installation.
   pass:
     type: string
-    encrypted: true
+    encrypted: false
     default: VMware1!
     title: Password for ocuser for OpenCart.
     description: The password you would like to have for OpenCart.
