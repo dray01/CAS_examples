@@ -1,3 +1,6 @@
+version: 1.0
+name: bd multi-machine agnostic
+
 formatVersion: 1
 inputs:
   Hostname1:

@@ -1,0 +1,78 @@
+version: 1.0
+name: bd azure sqlaas
+
+formatVersion: 1
+inputs:
+  account:
+    type: string
+    default: SDDC APJ Azure
+    enum:
+      - SDDC APJ Azure
+  region:
+    type: string
+    default: Australia East
+    enum:
+      - Australia East
+      - West Europe
+  vm_username:
+    title: User Account
+    type: string
+    description: Name of the user account to be created. Can only contain letters and numbers.
+    pattern: '^[a-zA-Z0-9]+$'
+  vm_password:
+    type: string
+    title: Password
+    writeOnly: true
+  db_user:
+    type: string
+    default: cmadmin
+  db_password:
+    encrypted: true
+    type: string
+    minLength: 8
+    maxLength: 32
+  sql_server_name:
+    type: string
+    pattern: '[a-z]'
+resources:
+  resource_group:
+    type: Cloud.Azure.ResourceGroup
+    properties:
+      name: resourcegroup1
+      useExisting: false
+  sql_db:
+    type: Cloud.Service.Azure.SQL.Database
+    properties:
+      name: sqldb-demo01
+      region: '${input.region}'
+      account: SDDC APJ Azure
+      server_name: '${resource.sql_server.name}'
+      resource_group_name: '${resource.resource_group.resourceName}'
+  sql_server:
+    type: Cloud.Service.Azure.SQL.Server
+    properties:
+      name: '${input.sql_server_name}'
+      region: '${input.region}'
+      account: SDDC APJ Azure
+      version: '12.0'
+      administrator_login: '${input.db_user}'
+      resource_group_name: '${resource.resource_group.resourceName}'
+      administrator_login_password: '${input.db_password}'
+  vm46:
+    type: Cloud.Azure.Machine
+    properties:
+      image: ubuntu 16.04
+      flavor: small
+      resourceGroupName: '${resource.resource_group.resourceName}'
+      networks:
+        - name: '${resource.network.name}'
+      remoteAccess:
+        username: '${input.vm_username}'
+        authentication: usernamePassword
+        password: '${input.vm_password}'
+  network:
+    type: Cloud.Network
+    properties:
+      name: net1
+      networkType: existing
+      constraints: null
