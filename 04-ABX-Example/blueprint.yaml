@@ -10,7 +10,7 @@ resources:
     properties:
       image: ubuntu 18.04
       flavor: small
-      enable_slack: 'true'
+      enable_slack: true
       constraints:
         - tag: 'platform:aws'
         - tag: 'region:sydney'
