@@ -1,4 +1,4 @@
-version: 1.8
+version: 1.9
 name: bd multi-machine opencart
 
 formatVersion: 1
@@ -115,7 +115,7 @@ resources:
           - sed -i "s/passwordhere/$PASS/g" /var/www/opencart/admin/config.php
           - systemctl reload apache2
           - systemctl restart apache2
-          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
+          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address wavefront.vmwapj.com  --proxy-port 2878
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - tee /etc/telegraf/telegraf.d/apache.conf > /dev/null << EOF
           - '[[inputs.apache]]'
@@ -175,7 +175,7 @@ resources:
           - mysql -u root -e 'CREATE DATABASE opencart'
           - mysql -u root -e 'USE opencart'
           - mysql -u root -e 'flush privileges'
-          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address ip-10-200-200-229.ap-southeast-2.compute.internal  --proxy-port 2878
+          - bash -c "$(curl -sL https://wavefront.com/install)" -- install --agent --proxy-address wavefront.vmwapj.com  --proxy-port 2878
           - tee /etc/telegraf/telegraf.d/mysqld.conf > /dev/null << EOF
           - '[[inputs.mysql]]'
           -   servers                                   = ["ocuser:VMware1!@tcp(127.0.0.1:3306)/"]
